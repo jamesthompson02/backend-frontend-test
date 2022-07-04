@@ -1,28 +1,67 @@
 const submitBtn = document.getElementById('submit-btn');
 
-const event = new Date();
-const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
 
-console.log(event.toLocaleDateString('en-gb', options));
+// function getTheTime() {
+//     const event1 = new Date();
+//     const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+//     let first = event1.toLocaleDateString('en-gb', options)
+//     const getHours = event1.getHours();
+//     const getMinutes = event1.getMinutes();
+//     const colon = ':'
+//     const morning = 'am';
+//     const afternoon = 'pm';
+//     if (getMinutes < 10) {
+//         if (getHours < 12 && getHours < 10) {
+//             const finalTime = first + ' ' + '0' + getHours + colon + '0' + getMinutes;
+//             return console.log(finalTime + morning);
+            
+//         } else if (getHours < 12) {
+//             const finalTime = first + ' ' + getHours + colon + '0' + getMinutes;
+//             return console.log(finalTime + morning);
+//         } else {
+//             const finalTime = first + ' ' + getHours + colon + '0' + getMinutes;
+//             return console.log(finalTime + afternoon);
+//         }
+//     } else {
+//         if (getHours < 12 && getHours < 10) {
+//             const finalTime = first + ' ' + '0' + getHours + colon + getMinutes;
+//             return console.log(finalTime + morning);   
+//         } else if (getHours < 12) {
+//             const finalTime = first + ' ' + getHours + colon + getMinutes;
+//             return console.log(finalTime + morning);
+
+//         } else {
+//             const finalTime = first + ' ' + getHours + colon + getMinutes;
+//             return console.log(finalTime + afternoon);
+
+//         }
+
+//     }
+
+// }
+
+// getTheTime();
+
+const now = new Date();
+const options = {
+   hour: 'numeric',
+      minute: 'numeric',
+      day: 'numeric',
+      month: 'numeric', 
+      year: 'numeric',
+};
+
+console.log(new Intl.DateTimeFormat('en-GB', options).format(now));
 
 
 submitBtn.addEventListener('click', async (e) => {
     e.preventDefault();
     const titleData = document.getElementById('title-input').value;
-    console.log(titleData);
-    const categoryData = document.getElementById('category-input').value;
+    const categoryData = document.getElementById('category-input').value;  
     const storyData = document.getElementById('story-input').value;
-    // await axios.post('http://localhost:5000/api/posts/career', 
-    // {
-    // title: titleData,
-    // category: categoryData,
-    // story: storyData
-    // }
-    // )
     await fetch('http://localhost:5000/api/posts/career', {
         method: 'POST',
         headers: {
-            // 'Access-Control-Allow-Origin': 'http://localhost:5000/api/posts/career',
             'Content-Type': 'application/json'
         },
         body: JSON.stringify({
