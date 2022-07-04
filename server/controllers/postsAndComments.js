@@ -9,13 +9,18 @@ const { readFileSync, writeFileSync, readFile, writeFile }= require('fs');
 const data = require('../') 
 
 function writeJSON(element){
-    const data = readFileSync('../data.json', 'utf8');
+    let data = readFileSync('../data.json', 'utf8');
     if (data === '[]') {
-        console.log(true)
+        writeFileSync('../data.json', '[', )
         writeFileSync('../data.json', JSON.stringify(element, null, 4), {flag: 'a'});
-
+        writeFileSync('../data.json', ']', {flag: 'a'}); 
     } else {
-        console.log(false);
+        data = data.slice(0, data.length - 1);
+        data += ',';
+        data += JSON.stringify(element, null, 4);
+        data += ']';
+        writeFileSync('../data.json', data);
+        
     }
     
 }
