@@ -59,16 +59,18 @@ submitBtn.addEventListener('click', async (e) => {
     const titleData = document.getElementById('title-input').value;
     const categoryData = document.getElementById('category-input').value;  
     const storyData = document.getElementById('story-input').value;
+    let newObject = {
+        title: titleData,
+        category: categoryData,
+        story: storyData,
+    }
     await fetch('http://localhost:5000/api/posts/career', {
         method: 'POST',
+        body: JSON.stringify(newObject), 
         headers: {
             'Content-Type': 'application/json'
         },
-        body: JSON.stringify({
-            title: titleData,
-            category: categoryData,
-            story: storyData,
-        })
+        
     })
     .then(response => console.log(response));
 })

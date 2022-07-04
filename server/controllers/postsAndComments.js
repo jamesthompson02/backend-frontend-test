@@ -4,7 +4,25 @@ const cors = require('cors');
 const bodyParser = require('body-parser');
 const jsonParser = bodyParser.json();
 const urlEncodedParser = bodyParser.urlencoded({extended: false});
+const posts = require('../data');
+const { readFileSync, writeFileSync, readFile, writeFile }= require('fs');  
+const data = require('../') 
 
+function writeJSON(element){
+    const data = readFileSync('../data.json', 'utf8');
+    if (data === '[]') {
+        console.log(true)
+        writeFileSync('../data.json', JSON.stringify(element, null, 4), {flag: 'a'});
+
+    } else {
+        console.log(false);
+    }
+    
+}
+
+function readJSON() {
+    return readFileSync('../data.json', 'utf8');
+}
 
 
 router.use(cors());
@@ -16,33 +34,18 @@ router.get('/', (req, res) => {
 })
 
 router.get('/career', (req, res) => {
-    res.json();
+    res.send(readJSON());
 })
 
 router.post('/career', urlEncodedParser, (req, res) => {
     const { title, category, story } = req.body;
-    console.log(req.body);
+    writeJSON(req.body);
     if ( title && category && story) {
-        return res.json({
-            "title": title,
-            "category": category,
-            "story": story
-        })
+        return res.send(readJSON());
     }
 
 })
 
-// app.get('/:category', (req, res) => {
-//     res.json();
-// })
-
-// app.get('/:category/:id', (req, res) => {
-//     res.send('');
-// })
-
-// app.get('/:category/:id/comments', (req, res) => {
-//     res.send('');
-// })
 
 router.all('*', (req, res) => {
     res.send(`<h1>Error, broken URL</h1>`);
